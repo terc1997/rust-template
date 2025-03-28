@@ -1,1 +1,1 @@
-# rust-build-system
+# rust-template
