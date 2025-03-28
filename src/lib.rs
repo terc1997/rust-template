@@ -6,7 +6,6 @@ pub fn return_true() -> bool {
     true
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
