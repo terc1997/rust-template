@@ -6,6 +6,9 @@
 DOCKER_USERNAME?=localhost
 GITHUB_REF?=refs/head/dev
 
+fmt:
+	cargo fmt --all --manifest-path ./image/Cargo.toml --check
+
 run:
 	cargo run --manifest-path ./image/Cargo.toml
 
