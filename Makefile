@@ -25,7 +25,7 @@ docker-build:
 	podman build -t ${DOCKER_USERNAME}/apps/rust-app:latest -f /image/Dockerfile .
 
 docker-push: docker-build
-	podman login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD} docker.io
+	podman login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD} docker.io
 	export BRANCH=$(echo ${GITHUB_REF} | sed "s/.*\\///g")
 	podman tag ${DOCKER_USERNAME}/apps/rust-app:latest ${DOCKER_USERNAME}/apps/rust-app:${BRANCH}_${BUILD_NUMBER}
 	podman push ${DOCKER_USERNAME}/apps/rust-app:${BRANCH}_${BUILD_NUMBER}
