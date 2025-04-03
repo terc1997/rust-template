@@ -5,6 +5,7 @@
 # Env vars
 DOCKER_USERNAME?=localhost
 GITHUB_REF?=refs/head/dev
+BRANCH=$(GITHUB_REF) | sed "s/.*\\///g"
 
 fmt:
 	cargo fmt --all --manifest-path ./image/Cargo.toml --check
@@ -24,8 +25,8 @@ build:
 docker-build:
 	podman build -t ${DOCKER_USERNAME}/apps/rust-app:latest -f /image/Dockerfile .
 
-docker-push: docker-build
+docker-push:
+	echo $(BRANCH)
 	podman login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD} docker.io
-	export BRANCH=$(echo $GITHUB_REF | sed "s/.*\\///g")
 	podman tag ${DOCKER_USERNAME}/apps/rust-app:latest ${DOCKER_USERNAME}/apps/rust-app:${BRANCH}_${BUILD_NUMBER}
 	podman push ${DOCKER_USERNAME}/apps/rust-app:${BRANCH}_${BUILD_NUMBER}
