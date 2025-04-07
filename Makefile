@@ -26,6 +26,6 @@ docker-build:
 	podman build -t apps/rust-app:latest -f /image/Dockerfile .
 
 docker-push: docker-build
-	podman login --username $(DOCKER_USERNAME) --password $(DOCKER_PASSWORD) docker.io
+	podman login --username $(DOCKER_USERNAME) --password $(DOCKER_PASSWORD) quay.io
 	podman tag localhost/apps/rust-app:latest $(DOCKER_USERNAME)/apps/rust-app:$(BRANCH)_$(BUILD_NUMBER)
 	podman push $(DOCKER_USERNAME)/apps/rust-app:$(BRANCH)_$(BUILD_NUMBER)
