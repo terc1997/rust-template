@@ -5,7 +5,7 @@
 # Env vars
 DOCKER_USERNAME?=localhost
 GITHUB_REF?=refs/head/dev
-BRANCH=`$(GITHUB_REF) | sed "s/.*\\///g"`
+BRANCH:=$(shell echo ${GITHUB_REF} | sed "s/.*\\///g")
 
 fmt:
 	cargo fmt --all --manifest-path ./image/Cargo.toml --check
