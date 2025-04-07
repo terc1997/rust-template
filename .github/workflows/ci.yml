@@ -1,5 +1,12 @@
 name: ci
 on: [push, pull_request]
+
+env:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  GITHUB_REF: ${{ github.ref }}
+  BUILD_NUMBER: ${{ github.run_number }}
+
 jobs:
   formatting:
     name: cargo fmt
@@ -9,13 +16,21 @@ jobs:
       - uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           components: rustfmt
-      - name: Rustfmt Check
-        uses: actions-rust-lang/rustfmt@v1
+      - run: make fmt
 
-  unit-test:
+  test:
     name: cargo test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions-rust-lang/setup-rust-toolchain@v1
-      - run: cargo test --all-features
+      - run: make test
+
+  docker-build-push:
+    name: Docker push to Registry
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: make docker-push
+
+
