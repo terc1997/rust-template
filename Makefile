@@ -23,9 +23,9 @@ build:
 	cargo build --target-dir ./image --manifest-path ./image/Cargo.toml
 
 docker-build:
-	podman build -t $(DOCKER_USERNAME)/apps/rust-app:latest -f /image/Dockerfile .
+	podman build -t apps/rust-app:latest -f /image/Dockerfile .
 
 docker-push:
 	podman login --username $(DOCKER_USERNAME) --password $(DOCKER_PASSWORD) docker.io
-	podman tag $(DOCKER_USERNAME)/apps/rust-app:latest $(DOCKER_USERNAME)/apps/rust-app:$(BRANCH)_$(BUILD_NUMBER)
+	podman tag localhost/apps/rust-app:latest $(DOCKER_USERNAME)/apps/rust-app:$(BRANCH)_$(BUILD_NUMBER)
 	podman push $(DOCKER_USERNAME)/apps/rust-app:$(BRANCH)_$(BUILD_NUMBER)
