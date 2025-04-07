@@ -25,17 +25,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions-rust-lang/setup-rust-toolchain@v1
       - run: make test
-  
-  docker-build:
-    name: Docker build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: make docker-build
 
-  docker-push:
+  docker-build-push:
     name: Docker push to Registry
-    needs: docker-build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
